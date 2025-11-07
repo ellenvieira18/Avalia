@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Notas lançadas</title>
+        <link rel="stylesheet" href="../styles/notas.css">
+    </head>
+    
+    <body>
+        <div class="barra-topo">
+            <img src="logo.png" alt="Logo" class="logo">
+            </div>
+    
+            <div class="title">
+                <h1><b>Notas lançadas:</b></h1>
+            </div>
+    
+        <div id="notas"></div>
+    
+        <script src="../src/notas_gerais.js"></script>
+    </body>
+    
+    <style>
+     .barra-topo {
+        background-color: #fef4dc;
+        height: 85px;
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+    }
+    .logo {
+        height: 70px;
+        width: auto;
+    }
+           
+    .title{
+        text-align: center;
+        margin-top: 15%;
+    }
+
+    /* Fundo da página */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+    /* Faixa superior */
+    header {
+        width: 100%;
+        height: 60px;
+        background-color: #FFF3CE;
+    }
+
+    /* Título Notas */
+    h1 {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 40px;
+        font-size: 26px;
+        font-weight: 600;
+        color: #2a2a2a;
+    }
+    
+    /* Container geral das notas */
+    #notas {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding-bottom: 40px;
+    }
+    
+    /* Caixa individual das notas */
+    .nota {
+        background: #DCE6FF;
+        width: 380px;
+        padding: 20px 25px;
+        border-radius: 10px;
+        font-size: 15px;
+        line-height: 1.5rem;
+        color: #1f1f1f;
+        box-shadow: 0px 3px 7px rgba(0,0,0,0.07);
+        border: none;
+    }
+    
+    .nota p {
+        margin: 5px 0;
+    }
+
+    .nota hr {
+        border: none;
+        height: 1px;
+        background: transparent;
+        margin: 0;
+    }
+
+</style>
+
+</html>

@@ -5,6 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login de Professor</title>
     
+</head>
+<body>
+    <div class="barra-topo">
+        <img src="logo.png" alt="Logo" class="logo">
+    </div>
+    
+    <form id="formLogin">
+        <h2><b>Bem Vindo de volta Professor</b></h2>
+        <h3>Você não tem uma conta?<a href="#"> Inscrever-se</a></h3>
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+        
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+
+        <button type="submit" class="lancar" >Entrar</button>
+        
+        <div class="mensagem" id="mensagem"></div>
+    </form>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -99,42 +119,22 @@
 
     </style>
     
-</head>
-<body>
-    <div class="barra-topo">
-        <img src="logo.png" alt="Logo" class="logo">
-    </div>
-
-    <form id="formLogin">
-        <h2>Bem Vindo de volta Professor</h2>
-        <h3>Você não tem uma conta?<a href="#"> Inscrever-se</a></h3>
-
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
-
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" name="senha" required>
-
-        <button type="submit">Entrar</button>
-
-        <div class="mensagem" id="mensagem"></div>
-    </form>
-
+    
     <script>
         const form = document.getElementById('formLogin');
         const mensagem = document.getElementById('mensagem');
-
+        
         // function Entrar() {
-        // window.location.href = "lancar.html";}
-
-        form.addEventListener('submit', async (e) => {
+            // window.location.href = "lancar.html";}
+            
+            form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
+            
             const nome = document.getElementById('nome').value;
             const senha = document.getElementById('senha').value;
 
             try {
-                const resposta = await fetch('http://localhost:3000/login', {
+                const resposta = await fetch('http://localhost:3000/api/professores/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ nome, senha })
@@ -145,6 +145,7 @@
                 if (resposta.ok) {
                     mensagem.style.color = 'green';
                     mensagem.textContent = data.message;
+                    window.location.href = "lancar.html";
                     
                 } else {
                     mensagem.style.color = 'red';
@@ -155,6 +156,8 @@
                 mensagem.textContent = 'Erro de conexão com o servidor.';
             }
         });
+
+       
     </script>
 </body>
 </html>

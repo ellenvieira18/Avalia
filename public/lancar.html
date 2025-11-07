@@ -5,6 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lançar notas no sistema</title>
 
+</head>
+<body>
+    
+    <div class="barra-topo">
+        <img src="logo.png" alt="Logo" class="logo">
+    </div>
+
+    <form id="formLancar">
+        <h2><b>Lançar nota no sistema</b></h2>
+
+        <label for="nomeAluno">Nome completo do aluno</label>
+        <input type="text" id="nomeAluno" name="nomeAluno" required>
+
+        <label for="turma">Turma</label>
+        <select id="turma" name="turma" required>
+            <option value="">Selecione a turma</option>
+            <option value="primeiro">1º ano</option>
+            <option value="segundo">2º ano</option>
+            <option value="terceiro">3º ano</option>
+        </select>
+
+        <label for="materia">Matéria</label>
+        <select id="materia" name="materia" required>
+            <option value="">Selecione uma matéria</option>
+            <option value="portugues">Português</option>
+            <option value="ingles">Inglês</option>
+            <option value="matematica">Matemática</option>
+        </select>
+
+        <label for="trimestre">Trimestre</label>
+        <select id="trimestre" name="trimestre" required>
+            <option value="">Selecione o trimestre</option>
+            <option value="primeiro">1º trimestre</option>
+            <option value="segundo">2º trimestre</option>
+            <option value="terceiro">3º trimestre</option>
+        </select>
+
+        <label for="nota">Nota final</label>
+        <input type="number" id="nota" name="nota" required>
+
+        <div class="botoes-container">
+            <button type="submit" class="salvar">Salvar Nota</button>
+            <button type="button" class="ver" onclick="verNota()">Ver Nota </button>
+           
+        </div>
+    </form>
     <style>
     body {
         font-family: 'Poppins', sans-serif;
@@ -104,62 +150,42 @@
   
 
 </style>
-</head>
-<body>
-
-    <div class="barra-topo">
-        <img src="logo.png" alt="Logo" class="logo">
-    </div>
-
-    <form id="formLancar">
-        <h2>Lançar nota no sistema</h2>
-
-        <label for="nomeAluno">Nome completo do aluno</label>
-        <input type="text" id="nomeAluno" name="nomeAluno" required>
-
-        <label for="turma">Turma</label>
-        <select id="turma" name="turma" required>
-            <option value="">Selecione a turma</option>
-            <option value="primeiro">1º ano</option>
-            <option value="segundo">2º ano</option>
-            <option value="terceiro">3º ano</option>
-        </select>
-
-        <label for="materia">Matéria</label>
-        <select id="materia" name="materia" required>
-            <option value="">Selecione uma matéria</option>
-            <option value="portugues">Português</option>
-            <option value="ingles">Inglês</option>
-            <option value="matematica">Matemática</option>
-        </select>
-
-        <label for="trimestre">Trimestre</label>
-        <select id="trimestre" name="trimestre" required>
-            <option value="">Selecione o trimestre</option>
-            <option value="primeiro">1º trimestre</option>
-            <option value="segundo">2º trimestre</option>
-            <option value="terceiro">3º trimestre</option>
-        </select>
-
-        <label for="nota">Nota final</label>
-        <input type="text" id="nota" name="nota" required>
-
-        <div class="botoes-container">
-            <button type="submit" class="salvar">Salvar Nota</button>
-            <button type="button" class="ver" onclick="verNota()">Ver Nota </button>
-        </div>
-    </form>
         <script>
-            // Impede que o botão "Ver Nota" exija campos obrigatórios
-            function verNota() {
-            const form = document.getElementById("notaForm");
-            form.querySelectorAll("[required]").forEach(el => el.removeAttribute("required"));
-            form.submit();
-           
-        }
+            
+            const form = document.getElementById('formLancar');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const nome = document.getElementById("nomeAluno").value;
+                const turma = document.getElementById("turma").value;
+                const materia = document.getElementById("materia").value;
+                const trimestre = document.getElementById("trimestre").value;
+                const nota = document.getElementById("nota").value;
+                
+                try {
+                    const response = await fetch("http://localhost:3000/api/notas/add", {
+                    method: 'POST',
+                    headers: { 'Content-type': 'application/json' },
+                    body: JSON.stringify({ nome, turma, materia, trimestre, nota })
+                });
+
+                const data = await response.json();
+
+                if(response.ok) {
+                    form.reset();
+                    alert('Nota salva! Clique em ver nota para consultar.')
+                } else {
+                    alert("deu errado")
+                }
+            } catch(err) {
+                console.log("erro: " + err);
+            }
+        })
+    
 
         function verNota() {
-        window.location.href = "turmas.html";}
+        window.location.href = "notas_gerais.html";}
     
         </script>
     </body>

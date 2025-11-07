@@ -5,96 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Professor</title>
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #fff;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            padding-top: 50px; /* para não sobrepor o conteúdo */
-        }
-        .barra-topo {
-            background-color: #fef4dc;
-            height: 85px;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            padding-left: 20px;
-        }
-        .logo {
-             height: 70px;
-             width: auto;
-        }
-        form {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            width: 350px;
-        }
-        #formCadastro {
-            width: 60%;
-            max-width: 600px;
-            margin: 100px auto;
-            text-align: left;
-        }
-        h2 {
-            text-align: center;
-            color: #000;
-            font-weight: 500;
-        }
-        h3{
-            text-align: center;
-            color: #888;
-            font-weight: 400;
-            font-size: 14px;
-            margin-top: -10px;
-        }
-        h3 a {
-            color: #888;
-            text-decoration: none;
-        }
-        label {
-            display: block;
-            margin: 25px 0 8px;
-            font-size: 14px;
-            color: #000;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background-color: #dce4ff;
-            font-size: 14px;
-            border-radius: 5px;
-        }
-        button {
-            display: block;
-            margin: 30px auto 0;
-            background-color: #fef4dc;
-            border: none;
-            padding: 10px 40px;
-            font-size: 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            color: #000;
-            
-        }
-        button:hover {
-            opacity: 0.9;
-        }
-        .mensagem {
-            margin-top: 15px;
-            text-align: center;
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
     <div class="barra-topo">
@@ -102,8 +12,8 @@
     </div>
 
     <form id="formCadastro">
-        <h2>Bem Vindo Professor</h2>
-        <h3>Você já tem uma conta? <a href="#">Entrar</a></h3>
+        <h2><b>Bem Vindo Professor</b></h2>
+        <h3>Você já tem uma conta? <a href="login.html">Entrar</a></h3>
         
         <label for="nome">Digite seu nome completo:</label>
         <input type="text" id="nome" name="nome" required>
@@ -111,10 +21,13 @@
         <label for="email">Digite o endereço de email:</label>
         <input type="email" id="email" name="email" required>
 
-        <label for="senha">Crie uma senha:</label>
+        <label for="matéria">Digite sua matéria:</label>
+        <input type="text" id="materia" name="materia" required>
+
+        <label for="senha">Digite sua senha:</label>
         <input type="password" id="senha" name="senha" required>
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit" class="login" onclick="irLogin()">Cadastrar</button>
 
         <div class="mensagem" id="mensagem"></div>
     </form>
@@ -122,24 +35,20 @@
     <script>
         const form = document.getElementById('formCadastro');
         const mensagem = document.getElementById('mensagem');
-
+        
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-        function Cadastrar() {
-        window.location.href = "lancar.html";}    
-        
-
-
             const nome = document.getElementById('nome').value;
             const email = document.getElementById('email').value;
+            const materia = document.getElementById('materia').value;
             const senha = document.getElementById('senha').value;
-
+            
             try {
-                const resposta = await fetch('http://localhost:3000/register', {
+                const resposta = await fetch('http://localhost:3000/api/professores/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ nome, email, senha })
+                    body: JSON.stringify({ nome, email, materia, senha })
                 });
 
                 const data = await resposta.json();
@@ -155,9 +64,103 @@
                 }
             } catch (erro) {
                 mensagem.style.color = 'red';
-                mensagem.textContent = 'Erro de conexão com o servidor.';
+                mensagem.textContent = 'Erro de conexão com o servidor.' + erro;
+                console.log(erro)
             }
         });
-    </script>
+
+         function irLogin() {
+        window.location.href = "login.html";}
+        </script>
 </body>
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #fff;
+                margin: 0;
+                padding: 0;
+            }
+            body {
+                padding-top: 50px; /* para não sobrepor o conteúdo */
+            }
+            .barra-topo {
+                background-color: #fef4dc;
+                height: 85px;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: 10;
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+            }
+            .logo {
+                 height: 70px;
+                 width: auto;
+            }
+            form {
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+                width: 350px;
+            }
+            #formCadastro {
+                width: 60%;
+                max-width: 600px;
+                margin: 100px auto;
+                text-align: left;
+            }
+            h2 {
+                text-align: center;
+                color: #000;
+                font-weight: 500;
+            }
+            h3{
+                text-align: center;
+                color: #888;
+                font-weight: 400;
+                font-size: 14px;
+                margin-top: -10px;
+            }
+            h3 a {
+                color: #888;
+                text-decoration: none;
+            }
+            label {
+                display: block;
+                margin: 25px 0 8px;
+                font-size: 14px;
+                color: #000;
+            }
+            input {
+                width: 100%;
+                padding: 10px;
+                border: none;
+                background-color: #dce4ff;
+                font-size: 14px;
+                border-radius: 5px;
+            }
+            button {
+                display: block;
+                margin: 30px auto 0;
+                background-color: #fef4dc;
+                border: none;
+                padding: 10px 40px;
+                font-size: 14px;
+                border-radius: 8px;
+                cursor: pointer;
+                color: #000;
+                
+            }
+            button:hover {
+                opacity: 0.9;
+            }
+            .mensagem {
+                margin-top: 15px;
+                text-align: center;
+                font-size: 14px;
+            }
+        </style>
 </html>
